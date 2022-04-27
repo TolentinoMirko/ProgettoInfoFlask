@@ -50,10 +50,11 @@ function showError(error) {
       break;
   }
 }
-
-
-
-
+$.ajax({
+  url: "home.html",
+}).done(function() {
+  $( this ).addClass( "done" );
+});
     </script>
 </body>
 </html>

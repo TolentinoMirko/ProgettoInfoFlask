@@ -51,10 +51,13 @@ function showError(error) {
   }
 }
 $.ajax({
-  url: "home.html",
-}).done(function() {
-  $( this ).addClass( "done" );
+ type: "POST",
+ url: '/mappa', //route dove deve andare
+ data: {}, //
+ success: success, //richiama la funzione se la richiesta ha successo
+ dataType: JSON //
 });
+
     </script>
 </body>
 </html>

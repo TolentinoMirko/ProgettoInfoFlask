@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    
+    <script>
+    src="https://code.jquery.com/jquery-3.6.0.min.js"
+    integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4="
+    crossorigin="anonymous">
+    </script>
+    <title>Document</title>
+
+</head>
+<body>
+
+    <script>
+
+function getLocation() {
+  if (navigator.geolocation) {
+    navigator.geolocation.getCurrentPosition(showPosition, showError);
+  } else {
+    alert("Geolocation is not supported by this browser.");
+  }
+}
+
+function showPosition(position) {
+  console.log(position.coords.latitude, position.coords.longitude);
+  console.log(`acc ${position.coords.accuracy}m`);
+
+  options['lat'] = position.coords.latitude;
+  options['lng'] = position.coords.longitude;
+
+  getData() //Esegue la funzione per comunicare con Flask
+}
+
+function showError(error) {
+  getData() //Esegue la funzione per comunicare con Flask
+
+  switch (error.code) {
+    case error.PERMISSION_DENIED:
+      alert("User denied the request for Geolocation.");
+      break;
+    case error.POSITION_UNAVAILABLE:
+      alert("Location information is unavailable.");
+      break;
+    case error.TIMEOUT:
+      alert("The request to get user location timed out.");
+      break;
+    case error.UNKNOWN_ERROR:
+      alert("An unknown error occurred.");
+      break;
+  }
+}
+
+
+
+
+    </script>
+</body>
+</html>

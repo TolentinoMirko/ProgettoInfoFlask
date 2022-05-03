@@ -1,0 +1,14 @@
+body {
+    margin: 0;
+    padding: 0;
+    font-family: sans-serif;
+}
+
+.map {
+    position: absolute;
+    left: 50%;
+    top: 31%;
+    transform: translate(-50%, -50%);
+    width: 800px;
+    height: 600px;
+}

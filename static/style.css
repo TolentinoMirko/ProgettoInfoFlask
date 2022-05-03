@@ -1,5 +1,31 @@
-body ,html{
+
+
+body{
+    background-image: url('/static/Duomo.jpg');
+    background-size: cover ;
+   
+    height: 100vh;
+    width: 100vw;
+    margin: 0;
+    padding: 0;
+    font-family: 'Montserrat', sans-serif;
     
-    height: 120%;
-  }
+}
+
+.button{
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+  width: 12%;
+  height: 55px;
+  font-size: 1.4em;
+  text-align: center;
+  font-weight: lighter;
+  color: rgba(15, 69, 161, 0.6);
+  background-color: rgb(255, 255, 255);
+  border: 1px solid rgba(15, 69, 161, 0.6);
+  border-radius: 50px;
+  
+}
 

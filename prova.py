@@ -11,6 +11,8 @@ matplotlib.use('Agg')
 import matplotlib.pyplot as plt
 import pandas as pd
 
+# pip install flask geopandas matplotlib contextily pandas folium
+
 @app.route("/", methods=["GET"])
 def home():
     return render_template("home.html")

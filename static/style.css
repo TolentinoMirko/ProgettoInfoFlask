@@ -1,9 +1,9 @@
 
 
 body{
+   
     background-image: url('/static/Duomo.jpg');
     background-size: cover ;
-   
     height: 100vh;
     width: 100vw;
     margin: 0;
@@ -16,7 +16,7 @@ body{
   position: absolute;
   left: 50%;
   top: 50%;
-  transform: translate(-50%, -50%);
+  transform: translate(-43%, 90%);
   width: 12%;
   height: 55px;
   font-size: 1.4em;
@@ -29,3 +29,15 @@ body{
   
 }
 
+
+.nomelogo{
+  position: absolute;
+  left: 50%;
+  right: 50%;
+  top: 40%;
+  width: -50%;
+  height: -50%;
+
+  transform: translate(-50%,-50%);
+  
+}

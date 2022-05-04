@@ -2,13 +2,28 @@ body {
     margin: 0;
     padding: 0;
     font-family: sans-serif;
+    background-color: rgba(226, 188, 33, 0.144);
 }
 
 .map {
     position: absolute;
     left: 50%;
-    top: 31%;
+    top: 32%;
     transform: translate(-50%, -50%);
-    width: 800px;
+    width: 600px;
     height: 600px;
+}
+.immagini{
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+    
+}
+.immagini1{
+    position: absolute;
+    left: 50%;
+    top: 72%;
+    transform: translate(-50%, -50%);
+    
 }

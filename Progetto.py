@@ -11,6 +11,7 @@ matplotlib.use('Agg')
 import matplotlib.pyplot as plt
 import pandas as pd
 import folium
+
 # pip install flask geopandas matplotlib contextily pandas folium
 
 quartieri = gpd.read_file('/workspace/ProgettoInfoFlask/static/ds964_nil_wm-20220502T120333Z-001.zip')
@@ -20,12 +21,13 @@ quartieri = gpd.read_file('/workspace/ProgettoInfoFlask/static/ds964_nil_wm-2022
 
 @app.route("/", methods=["GET"])
 def home():
+    
     return render_template("home.html")
 
 @app.route("/selezione", methods=["GET"])
 def selezione():
     m = folium.Map(location=[45.46, 9.18], zoom_start=11, tiles='CartoDB positron')
-    tooltip = "Click me!"
+    tooltip = "Cliccami!"
 
     folium.Marker(location=[45.46, 9.18], popup="<i>boh</i>", tooltip=tooltip).add_to(m)
 
@@ -56,4 +58,4 @@ def selezione():
 
 
 if __name__ == '__main__':
-  app.run(host='0.0.0.0', port=1234, debug=True)
+  app.run(host='0.0.0.0', port=2000, debug=True)

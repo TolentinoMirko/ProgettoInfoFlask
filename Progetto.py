@@ -15,19 +15,24 @@ import folium
 # pip install flask geopandas matplotlib contextily pandas folium
 
 quartieri = gpd.read_file('/workspace/ProgettoInfoFlask/static/ds964_nil_wm-20220502T120333Z-001.zip')
-
-
+scuole = gpd.read_file('/workspace/ProgettoInfoFlask/static/ds1305_elenco_scuole_statali_as2020_21_def_final_.geojson')
+scuole.to_crs(4326)
+scuole['lon'] = scuole['geometry'].x
+scuole['lat'] = scuole['geometry'].y
 
 
 @app.route("/", methods=["GET"])
 def home():
-    
-    return render_template("home.html")
+    scuolelista = scuole.DENOMINAZIONEISTITUTORIFERIMENTO.tolist()
+
+    return render_template("home.html",istituti = scuolelista)
 
 @app.route("/selezione", methods=["GET"])
 def selezione():
     m = folium.Map(location=[45.46, 9.18], zoom_start=11, tiles='CartoDB positron')
     tooltip = "Cliccami!"
+    scuolelon = scuole['lon']
+    scuolelon = scuole['lon']
 
     folium.Marker(location=[45.46, 9.18], popup="<i>boh</i>", tooltip=tooltip).add_to(m)
 

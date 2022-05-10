@@ -3,11 +3,7 @@
 
 <head>
 
-  <script>
-    src = "https://code.jquery.com/jquery-3.6.0.min.js"
-    integrity = "sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4="
-    crossorigin = "anonymous" >
-  </script>
+
   <title>MilanWays</title>
   <link rel="stylesheet" href="static/style.css">
 
@@ -17,26 +13,34 @@
 
 
 
-    <img src="static/nomelogo.png" alt="NomeImage" class="nomelogo">
-  
+  <img src="static/nomelogo.png" alt="NomeImage" class="nomelogo">
+
 
 
   <form action="/selezione" method='GET'>
-
+    {% for istituto in istituti%}
+    <input type="radio" value="{{istituto}}" name="opzioni">{{istituto}}</input>
+    {%endfor%}
     <input type="submit" value="AVVIA" class='button' />
+
 
   </form>
 
 </body>
+
+
+
+
+
 <script>
 
-    function getLocation() {
-      if (navigator.geolocation) {
-        navigator.geolocation.getCurrentPosition(showPosition, showError);
-      } else {
-        alert("Geolocation is not supported by this browser.");
-      }
+  function getLocation() {
+    if (navigator.geolocation) {
+      navigator.geolocation.getCurrentPosition(showPosition, showError);
+    } else {
+      alert("Geolocation is not supported by this browser.");
     }
+  }
 
   function showPosition(position) {
     console.log(position.coords.latitude, position.coords.longitude);

@@ -23,16 +23,24 @@ scuole['lat'] = scuole['geometry'].y
 
 @app.route("/", methods=["GET"])
 def home():
-    scuolelista = scuole.DENOMINAZIONEISTITUTORIFERIMENTO.tolist()
 
+    scuolelista = scuole.DENOMINAZIONEISTITUTORIFERIMENTO.tolist()
+    scuolelista.sort()
+    print(scuolelista)
     return render_template("home.html",istituti = scuolelista)
 
 @app.route("/selezione", methods=["GET"])
 def selezione():
+    scuolascelta = request.args['scuoledropdown']
+    
     m = folium.Map(location=[45.46, 9.18], zoom_start=11, tiles='CartoDB positron')
+    
     tooltip = "Cliccami!"
-    scuolelon = scuole['lon']
-    scuolelon = scuole['lon']
+    
+    scuolautente = scuole[scuole['DENOMINAZIONEISTITUTORIFERIMENTO']==scuolascelta]
+    scuola_lat = scuolautente['LAT_Y']
+    scuola_long = scuolautente['LONG_X']
+    print(scuolautente)
 
     folium.Marker(location=[45.46, 9.18], popup="<i>boh</i>", tooltip=tooltip).add_to(m)
 

@@ -18,9 +18,11 @@
 
 
   <form action="/selezione" method='GET'>
-    {% for istituto in istituti%}
-    <input type="radio" value="{{istituto}}" name="opzioni">{{istituto}}</input>
-    {%endfor%}
+    <select name="scuoledropdown">
+      {% for istituto in istituti%}
+      <option value="{{istituto}}" SELECTED>{{istituto}}</option>
+      {%endfor%}
+    </select>
     <input type="submit" value="AVVIA" class='button' />
 
 

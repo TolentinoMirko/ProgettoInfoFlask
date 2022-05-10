@@ -16,33 +16,41 @@ import folium
 
 quartieri = gpd.read_file('/workspace/ProgettoInfoFlask/static/ds964_nil_wm-20220502T120333Z-001.zip')
 scuole = gpd.read_file('/workspace/ProgettoInfoFlask/static/ds1305_elenco_scuole_statali_as2020_21_def_final_.geojson')
+impianti_sportivi = gpd.read_file('/workspace/ProgettoInfoFlask/static/impianti_sportivi_11_06_2020.geojson')
+fermate_tram = gpd.read_file('/workspace/ProgettoInfoFlask/static/tpl_fermate.geojson')
+fermate_metro = gpd.read_file('/workspace/ProgettoInfoFlask/static/tpl_metrofermate.geojson')
+
+
 scuole.to_crs(4326)
 scuole['lon'] = scuole['geometry'].x
-scuole['lat'] = scuole['geometry'].y
+scuole['lat'] = scuole['geometry'].y 
 
 
 @app.route("/", methods=["GET"])
 def home():
 
-    scuolelista = scuole.DENOMINAZIONEISTITUTORIFERIMENTO.tolist()
+    scuolelista = scuole.DENOMINAZIONESCUOLA.drop_duplicates()
+    scuolelista = scuolelista.to_list()
     scuolelista.sort()
-    print(scuolelista)
+    
     return render_template("home.html",istituti = scuolelista)
 
 @app.route("/selezione", methods=["GET"])
 def selezione():
+    global scuolautente
     scuolascelta = request.args['scuoledropdown']
     
     m = folium.Map(location=[45.46, 9.18], zoom_start=11, tiles='CartoDB positron')
     
-    tooltip = "Cliccami!"
+    tooltip = "Cliccami!",
     
-    scuolautente = scuole[scuole['DENOMINAZIONEISTITUTORIFERIMENTO']==scuolascelta]
-    scuola_lat = scuolautente['LAT_Y']
+    scuolautente = scuole[scuole['DENOMINAZIONESCUOLA']==scuolascelta]
     scuola_long = scuolautente['LONG_X']
-    print(scuolautente)
+    scuola_lat = scuolautente['LAT_Y']
+    scuola_nome = scuolautente['DENOMINAZIONESCUOLA']
+    info = [scuola_nome,scuola_lat,scuola_long]
 
-    folium.Marker(location=[45.46, 9.18], popup="<i>boh</i>", tooltip=tooltip).add_to(m)
+    folium.Marker(location=[scuola_lat,scuola_long], popup=info, tooltip=tooltip).add_to(m)
 
     shapes = gpd.GeoSeries(quartieri['geometry']).simplify(tolerance=0.00001)
     shapes = shapes.to_json()
@@ -53,20 +61,41 @@ def selezione():
 
 
   
-#fontanelle
+#campi sportivi
+@app.route("/campisportivi", methods=["GET"])
+def campi():
+    dist_campi = impianti_sportivi.distance(scuolautente)
+    min_dist = impianti_sportivi[impianti_sportivi.distance(scuolautente) <= dist_campi.min()]
+    print(min_dist)
+    return render_template("mappa.html")
 
 
 
-
-#stazionibici
-
-
-
-#supermercato
+#ristoranti
+@app.route("/ristoranti", methods=["GET"])
+def ristoranti():
 
 
+    return render_template("mappa.html")
 
-#tabaccheria
+
+
+#tram
+@app.route("/tram", methods=["GET"])
+def tram():
+
+
+    return render_template("mappa.html")
+
+
+
+#metropolitane
+@app.route("/metropolitane", methods=["GET"])
+def metropolitane():
+
+
+    return render_template("mappa.html")
+
 
 
 

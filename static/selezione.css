@@ -16,14 +16,14 @@ body {
 .immagini{
     position: absolute;
     left: 50%;
-    top: 50%;
+    top: 53%;
     transform: translate(-50%, -50%);
     
 }
 .immagini1{
     position: absolute;
     left: 50%;
-    top: 72%;
+    top: 79%;
     transform: translate(-50%, -50%);
     
 }

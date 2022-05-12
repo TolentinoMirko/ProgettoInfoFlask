@@ -7,7 +7,7 @@ from matplotlib.backends.backend_agg import FigureCanvasAgg as FigureCanvas
 import contextily
 import geopandas as gpd
 import io
-from shapely.geometry import Point,MultiPoint
+from shapely.geometry import Point, MultiPoint
 from shapely.ops import nearest_points
 from flask import Flask, render_template, send_file, make_response, url_for, Response, request, redirect
 app = Flask(__name__)
@@ -22,13 +22,15 @@ scuole = gpd.read_file(
     '/workspace/ProgettoInfoFlask/static/ds1305_elenco_scuole_statali_as2020_21_def_final_.geojson')
 impianti_sportivi = gpd.read_file(
     '/workspace/ProgettoInfoFlask/static/impianti_sportivi_11_06_2020.geojson')
+ristoranti_GPD = gpd.read_file(
+    '/workspace/ProgettoInfoFlask/static/economia_pubblici_esercizi_in_piano.geojson')
 fermate_tram = gpd.read_file(
     '/workspace/ProgettoInfoFlask/static/tpl_fermate.geojson')
 fermate_metro = gpd.read_file(
     '/workspace/ProgettoInfoFlask/static/tpl_metrofermate.geojson')
 
 
-#scuole.to_crs(4326)
+# scuole.to_crs(4326)
 #scuole['lon'] = scuole['geometry'].x
 #scuole['lat'] = scuole['geometry'].y
 
@@ -45,9 +47,9 @@ def home():
 
 @app.route("/selezione", methods=["GET"])
 def selezione():
-    
-    global scuolautente,info,scuola_lat,scuola_long
-    
+
+    global scuolautente, info, scuola_lat, scuola_long
+
     scuolascelta = request.args['scuoledropdown']
 
     m = folium.Map(location=[45.46, 9.18],
@@ -78,30 +80,29 @@ def selezione():
 # campi sportivi
 @app.route("/campisportivi", methods=["GET"])
 def campi():
-    print(scuolautente.crs)
-    print(impianti_sportivi.crs)
+
     puntoscuola = scuolautente['geometry'].to_crs(32632).values[0]
-    print(puntoscuola)
     dist_campi = impianti_sportivi.to_crs(32632).distance(puntoscuola)
-    print(dist_campi)
-    min_dist = impianti_sportivi[impianti_sportivi.to_crs(32632).distance(puntoscuola) <= dist_campi.min()].head(0)
-    #destinazioni = MultiPoint([impianti_sportivi['coordinates']])
-    
+    min_dist = impianti_sportivi[impianti_sportivi.to_crs(
+        32632).distance(puntoscuola) <= dist_campi.min()].iloc[0]
+
     print(min_dist)
 
     campo_lat = min_dist['Latitudine']
     campo_long = min_dist['Longitudine']
-
     m = folium.Map(location=[45.46, 9.18],
                    zoom_start=11, tiles='CartoDB positron')
 
     tooltip = "Cliccami!",
-    folium.Marker(location=[scuola_lat, scuola_long],popup=info, tooltip=tooltip).add_to(m)
+   
+    folium.Marker(location=[scuola_lat, scuola_long],
+                  popup=info, tooltip=tooltip).add_to(m)
     folium.Marker(location=[campo_lat, campo_long], tooltip=tooltip).add_to(m)
 
     shapes = gpd.GeoSeries(quartieri['geometry']).simplify(tolerance=0.00001)
     shapes = shapes.to_json()
-    shapes = folium.GeoJson(data=shapes, style_function=lambda x: {'fillColor': 'blue'})
+    shapes = folium.GeoJson(data=shapes, style_function=lambda x: {
+                            'fillColor': 'blue'})
     shapes.add_to(m)
 
     return render_template("mappa.html", map=m._repr_html_())
@@ -110,14 +111,45 @@ def campi():
 # ristoranti
 @app.route("/ristoranti", methods=["GET"])
 def ristoranti():
-    dist_ristorante = impianti_sportivi.distance(scuolautente)
-    min_dist = impianti_sportivi[impianti_sportivi.distance(scuolautente) <= dist_campi.min()]
-    return render_template("mappa.html")
+    puntoscuola = scuolautente['geometry'].to_crs(32632).values[0]
+    dist_ristorante = ristoranti_GPD.to_crs(32632).distance(puntoscuola)
+    min_ristorante = ristoranti_GPD[ristoranti_GPD.to_crs(
+        32632).distance(puntoscuola) <= dist_ristorante.min()].iloc[0]
+
+    print(min_ristorante)
+
+    ris_lat = min_ristorante['LAT_WGS84']
+    ris_long = min_ristorante['LONG_WGS84']
+    nome_campo = min_ristorante['VIA']
+
+    m = folium.Map(location=[45.46, 9.18],
+                   zoom_start=11, tiles='CartoDB positron')
+
+    tooltip = "Cliccami!",
+    folium.Marker(location=[scuola_lat, scuola_long],
+                  popup=info, tooltip=tooltip).add_to(m)
+    folium.Marker(location=[ris_lat, ris_long],popup= nome_campo ,tooltip=tooltip).add_to(m)
+
+    shapes = gpd.GeoSeries(quartieri['geometry']).simplify(tolerance=0.00001)
+    shapes = shapes.to_json()
+    shapes = folium.GeoJson(data=shapes, style_function=lambda x: {
+                            'fillColor': 'blue'})
+    shapes.add_to(m)
+
+    return render_template("mappa.html", map=m._repr_html_())
 
 
 # tram
 @app.route("/tram", methods=["GET"])
 def tram():
+    lista_linee_tram = fermate_tram.drop_duplicates()
+    lista_linee_tram = lista_linee_tram.to_list()
+    lista_linee_tram.sort_values()
+    return render_template("sceltalinee.html", fermate=lista_linee_tram)
+
+
+@app.route("/trampunto", methods=["GET"])
+def trampunto():
 
     return render_template("mappa.html")
 

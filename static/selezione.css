@@ -8,7 +8,7 @@ body {
 .map {
     position: absolute;
     left: 50%;
-    top: 32%;
+    top: 34%;
     transform: translate(-50%, -50%);
     width: 600px;
     height: 600px;
@@ -16,14 +16,14 @@ body {
 .immagini{
     position: absolute;
     left: 50%;
-    top: 53%;
+    top: 55%;
     transform: translate(-50%, -50%);
     
 }
 .immagini1{
     position: absolute;
     left: 50%;
-    top: 79%;
+    top: 82%;
     transform: translate(-50%, -50%);
     
 }

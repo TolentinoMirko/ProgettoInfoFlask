@@ -29,6 +29,8 @@ fermate_tram = gpd.read_file(
 fermate_metro = gpd.read_file(
     '/workspace/ProgettoInfoFlask/static/tpl_metrofermate.geojson')
 
+fermate_tram['lon'] = fermate_tram['geometry'].x
+fermate_tram['lat'] = fermate_tram['geometry'].y
 
 # scuole.to_crs(4326)
 #scuole['lon'] = scuole['geometry'].x
@@ -142,14 +144,43 @@ def ristoranti():
 # tram
 @app.route("/tram", methods=["GET"])
 def tram():
-    lista_linee_tram = fermate_tram.drop_duplicates()
+    lista_linee_tram = fermate_tram.linee.drop_duplicates()
     lista_linee_tram = lista_linee_tram.to_list()
-    lista_linee_tram.sort_values()
+    lista_linee_tram.sort()
     return render_template("sceltalinee.html", fermate=lista_linee_tram)
 
 
 @app.route("/trampunto", methods=["GET"])
 def trampunto():
+    linea_utente = request.args['fermatedropdown']
+    linea_scelta = fermate_tram.loc[fermate_tram['linee'].str.contains(linea_utente,case=False)]
+    
+    puntoscuola = scuolautente['geometry'].to_crs(32632).values[0]
+    dist_fermate_tram = linea_scelta.to_crs(32632).distance(puntoscuola)
+    min_fermata_tram = linea_scelta[linea_scelta(32632).distance(puntoscuola) <= dist_fermate_tram.min()].iloc[0]
+    
+    print(fermate_tram.head())
+
+
+    ris_lat = min_ristorante['LAT_WGS84']
+    ris_long = min_ristorante['LONG_WGS84']
+    nome_linea = min_ristorante['insegna']
+
+    m = folium.Map(location=[45.46, 9.18],
+                   zoom_start=11, tiles='CartoDB positron')
+
+    tooltip = "Cliccami!",
+    folium.Marker(location=[scuola_lat, scuola_long],
+                  popup=info, tooltip=tooltip).add_to(m)
+    folium.Marker(location=[ris_lat, ris_long],popup= nome_ristorante ,tooltip=tooltip).add_to(m)
+
+    shapes = gpd.GeoSeries(quartieri['geometry']).simplify(tolerance=0.00001)
+    shapes = shapes.to_json()
+    shapes = folium.GeoJson(data=shapes, style_function=lambda x: {
+                            'fillColor': 'blue'})
+    shapes.add_to(m)
+
+    return render_template("mappa.html", map=m._repr_html_())
 
     return render_template("mappa.html")
 

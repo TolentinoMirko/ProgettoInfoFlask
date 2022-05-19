@@ -70,7 +70,9 @@ def selezione():
     scuola_long = scuolautente['LONG_X']
     scuola_lat = scuolautente['LAT_Y']
     scuola_nome = scuolautente['DENOMINAZIONESCUOLA']
-    info = [scuola_nome, scuola_lat, scuola_long]
+    scuola_via = scuolautente['INDIRIZZOSCUOLA']
+    info = [scuola_nome,scuola_via]
+    print(info)
 
     folium.Marker(location=[scuola_lat, scuola_long],
                   popup=info, tooltip=tooltip).add_to(m)

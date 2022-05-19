@@ -97,6 +97,10 @@ def campi():
 
     campo_lat = min_dist['Latitudine']
     campo_long = min_dist['Longitudine']
+    campo_via = min_dist['VIA']
+    campo_nome = min_dist['SPECIFICA_LOCALITA']
+    campo_localita = min_dist['LOCALITA']
+    info = [campo_nome,campo_via,campo_localita]
     m = folium.Map(location=[45.4654219, 9.1859243],
                    zoom_start=11, tiles='CartoDB positron')
 
@@ -128,14 +132,15 @@ def ristoranti():
     ris_lat = min_ristorante['LAT_WGS84']
     ris_long = min_ristorante['LONG_WGS84']
     nome_ristorante = min_ristorante['insegna']
-
+    rist_via = min_ristorante['Ubicazione']
+    info = [nome_ristorante,rist_via]
     m = folium.Map(location=[45.4654219, 9.1859243],
                    zoom_start=11, tiles='CartoDB positron')
 
     tooltip = "Cliccami!",
     folium.Marker(location=[scuola_lat, scuola_long],
                   popup=info, tooltip=tooltip).add_to(m)
-    folium.Marker(location=[ris_lat, ris_long],popup= nome_ristorante ,tooltip=tooltip).add_to(m)
+    folium.Marker(location=[ris_lat, ris_long],popup= info ,tooltip=tooltip).add_to(m)
 
     shapes = gpd.GeoSeries(quartieri['geometry']).simplify(tolerance=0.00001)
     shapes = shapes.to_json()

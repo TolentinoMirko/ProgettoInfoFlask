@@ -34,7 +34,7 @@ body{
   position: absolute;
   left: 50%;
   right: 50%;
-  top: 35%;
+  top: 33%;
   width: -50%;
   height: -50%;
 
@@ -60,4 +60,12 @@ body{
 .drop select {
   height: 30px;
   border-radius: 5px;
+}
+
+
+.sottotitolo{
+  color: rgb(255, 255, 255);
+  left: 45%;
+  right: 50%;
+  top: 50%;
 }

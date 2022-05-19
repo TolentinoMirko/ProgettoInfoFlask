@@ -4,11 +4,14 @@
 
 
 <form action="/trampunto" method='GET'>
-    <select name="fermatedropdown">
+  <div class="drop">  
+  <select name="fermatedropdown">
       {% for fermata in fermate%}
       <option value="{{fermata}}" SELECTED>{{fermata}}</option>
       {%endfor%}
     </select>
+  </div>  
+  
     <input type="submit" value="CERCA" class='button' />
 
 

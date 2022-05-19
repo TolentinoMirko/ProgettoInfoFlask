@@ -11,3 +11,37 @@ body{
     background-position: center;
     background-repeat: no-repeat;
 }
+
+
+.drop{
+    position: absolute;
+  left: 47%;
+  right: 50%;
+  top: 30%;
+  width: -50px;
+  height: -50%;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+  transform: translate(-50%,-50%);
+}
+
+.drop select{
+  height: 30px;
+  border-radius: 5px;
+}
+
+.button {
+  position: absolute;
+  left: 50%;
+  top: 25%;
+  transform: translate(-43%, 160%);
+  width: 12%;
+  height: 55px;
+  font-size: 1.4em;
+  text-align: center;
+  font-weight: lighter;
+  color: rgba(15, 69, 161, 0.6);
+  background-color: rgb(255, 255, 255);
+  border: 1px solid rgba(15, 69, 161, 0.6);
+  border-radius: 50px;
+}

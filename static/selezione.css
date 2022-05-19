@@ -2,7 +2,7 @@ body {
     margin: 0;
     padding: 0;
     font-family: sans-serif;
-    background-color: rgba(226, 188, 33, 0.144);
+    background-color: rgba(56, 53, 53, 0.329);
 }
 
 .map {
@@ -27,3 +27,4 @@ body {
     transform: translate(-50%, -50%);
     
 }
+

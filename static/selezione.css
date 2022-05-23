@@ -2,29 +2,32 @@ body {
     margin: 0;
     padding: 0;
     font-family: sans-serif;
-    background-color: rgba(56, 53, 53, 0.329);
+    background: url('/static/camposportivo.jpg');
+}
+
+.content {
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    gap: 5px;
+    background-color: white;
+    padding: 30px 45px;
+    border-radius: 7px;
 }
 
 .map {
-    position: absolute;
-    left: 50%;
-    top: 34%;
-    transform: translate(-50%, -50%);
-    width: 600px;
-    height: 600px;
-}
-.immagini{
-    position: absolute;
-    left: 50%;
-    top: 55%;
-    transform: translate(-50%, -50%);
-    
-}
-.immagini1{
-    position: absolute;
-    left: 50%;
-    top: 82%;
-    transform: translate(-50%, -50%);
-    
+    width: 605px;
 }
 
+.imgs {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    grid-template-rows: repeat(2, 1fr);
+    grid-column-gap: 5px;
+    grid-row-gap: 5px;
+}

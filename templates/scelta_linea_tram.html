@@ -1,19 +1,25 @@
-<title>Scelta tram</title>
+<!DOCTYPE html>
+<html lang="en">
 
-<link rel="stylesheet" href="static/tram.css">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Scelta tram</title>
+  <link rel="stylesheet" href="/static/tram.css">
+</head>
 
-
-<form action="/trampunto" method='GET'>
-  <div class="drop">  
-  <select name="fermatedropdown">
+<body>
+  <div class="background"></div>
+  <form action="/trampunto" method='GET'>
+    <label for="fermatedropdown">Selezionare fermata</label>
+    <select name="fermatedropdown">
       {% for fermata in fermate%}
       <option value="{{fermata}}" SELECTED>{{fermata}}</option>
       {%endfor%}
     </select>
-  </div>  
-  
-    <input type="submit" value="CERCA" class='button' />
+    <a onclick="this.closest('form').submit();return false;" class='button'>CERCA</a>
+  </form>
+</body>
 
-
-
-    
+</html>

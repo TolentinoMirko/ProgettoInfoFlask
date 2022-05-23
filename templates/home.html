@@ -21,7 +21,7 @@
         <option value="{{istituto}}" SELECTED>{{istituto}}</option>
         {%endfor%}
       </select>
-      <input type="submit" value="AVVIA" class='button' />
+      <a onclick="this.closest('form').submit();return false;" class='button'>AVVIA</a>
     </form>
   </div>
 

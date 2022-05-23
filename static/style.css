@@ -8,6 +8,14 @@ body {
   font-family: 'Montserrat', sans-serif;
 }
 
+.nomelogo {
+  background-image: url('/static/nomelogo.png');
+  width: 70vw;
+  height: 200px;
+  background-size: cover;
+  background-position: center;
+}
+
 .button {
   font-size: 1.4em;
   text-align: center;
@@ -28,6 +36,10 @@ select {
   align-items: center;
   justify-content: center;
   flex-direction: column;
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%,-50%);
 }
 
 form {

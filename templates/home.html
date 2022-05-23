@@ -11,25 +11,20 @@
 
 <body>
 
+  <div class="content">
 
+    <img src="/static/nomelogo.png" alt="NomeImage" class="nomelogo">
+    <p class="subtitle">non c'e' vita senza luce non c'e' italia senza duce</p>
 
-  <img src="static/nomelogo.png" alt="NomeImage" class="nomelogo">
-
-
-
-  
-  <form action="/selezione" method='GET'>
-  <div class="drop">
-    <select name="scuoledropdown">
-      {% for istituto in istituti%}
-      <option value="{{istituto}}" SELECTED>{{istituto}}</option>
-      {%endfor%}
-    </select>
+    <form action="/selezione" method='GET'>
+      <select name="scuoledropdown">
+        {% for istituto in istituti%}
+        <option value="{{istituto}}" SELECTED>{{istituto}}</option>
+        {%endfor%}
+      </select>
+      <input type="submit" value="AVVIA" class='button' />
+    </form>
   </div>
-    <input type="submit" value="AVVIA" class='button' />
-
-
-  </form>
 
 </body>
 
@@ -75,13 +70,13 @@
         break;
     }
   }
-  $.ajax({
-    type: "POST",
-    url: '/mappa', //route dove deve andare
-    data: {}, //
-    success: success, //richiama la funzione se la richiesta ha successo
-    dataType: JSON //
-  });
+  // $.ajax({
+  //   type: "POST",
+  //   url: '/mappa', //route dove deve andare
+  //   data: {}, //
+  //   success: success, //richiama la funzione se la richiesta ha successo
+  //   dataType: JSON //
+  // });
 
 </script>
 

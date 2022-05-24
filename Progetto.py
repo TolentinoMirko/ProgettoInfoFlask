@@ -104,7 +104,7 @@ def campi():
     campo_localita = min_dist['LOCALITA']
     info = [campo_nome,campo_via,campo_localita]
     m = folium.Map(location=[45.4654219, 9.1859243],
-                   zoom_start=11, tiles='CartoDB positron')
+                   zoom_start=12, tiles='CartoDB positron')
 
     tooltip = "Cliccami!",
    
@@ -135,14 +135,14 @@ def ristoranti():
     ris_long = min_ristorante['LONG_WGS84']
     nome_ristorante = min_ristorante['insegna']
     rist_via = min_ristorante['Ubicazione']
-    info = [nome_ristorante,rist_via]
+    info2 = [nome_ristorante,rist_via]
     m = folium.Map(location=[45.4654219, 9.1859243],
-                   zoom_start=11, tiles='CartoDB positron')
+                   zoom_start=12, tiles='CartoDB positron')
 
     tooltip = "Cliccami!",
     folium.Marker(location=[scuola_lat, scuola_long],
                   popup=info, tooltip=tooltip).add_to(m)
-    folium.Marker(location=[ris_lat, ris_long],popup= info ,tooltip=tooltip).add_to(m)
+    folium.Marker(location=[ris_lat, ris_long],popup= info2 ,tooltip=tooltip).add_to(m)
 
     shapes = gpd.GeoSeries(quartieri['geometry']).simplify(tolerance=0.00001)
     shapes = shapes.to_json()
@@ -180,7 +180,7 @@ def trampunto():
     num_linea = min_fermata_tram['linee']
     
     m = folium.Map(location=[45.4654219, 9.1859243],
-                   zoom_start=11, tiles='CartoDB positron')
+                   zoom_start=12, tiles='CartoDB positron')
 
     tooltip = "Cliccami!",
     folium.Marker(location=[scuola_lat, scuola_long],
@@ -223,12 +223,12 @@ def metropunto():
     ris_long = min_fermata_metro['lon']
 
     m = folium.Map(location=[45.4654219, 9.1859243],
-                   zoom_start=11, tiles='CartoDB positron')
+                   zoom_start=12, tiles='CartoDB positron')
 
     tooltip = "Cliccami!",
     folium.Marker(location=[scuola_lat, scuola_long],
                   popup=info, tooltip=tooltip).add_to(m)
-    folium.Marker(location=[ris_lat, ris_long],tooltip=tooltip).add_to(m)
+    folium.Marker(location=[ris_lat, ris_long],popup = min_fermata_metro['linee'],tooltip=tooltip).add_to(m)
 
     shapes = gpd.GeoSeries(quartieri['geometry']).simplify(tolerance=0.00001)
     shapes = shapes.to_json()

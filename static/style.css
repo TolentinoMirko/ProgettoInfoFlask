@@ -1,5 +1,5 @@
 :root {
-  --effects-color: #2bcbba;
+  --effects-color: #e44023;
 }
 
 body {
@@ -82,4 +82,10 @@ form {
 .subtitle {
   color: white;
   font-size: 2rem;
+  -webkit-text-fill-color: white;
+  -webkit-text-stroke-width: 1px;
+  -webkit-text-stroke-color: black;
+  
+
+  
 }

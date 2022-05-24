@@ -2,7 +2,14 @@ body {
     margin: 0;
     padding: 0;
     font-family: sans-serif;
-    background: url('/static/camposportivo.jpg');
+    background: black;
+}
+
+.bg {
+    background: url('/static/school.jpg');
+    width: 100vw;
+    height: 100vh;
+    opacity: .5;
 }
 
 .content {
@@ -16,7 +23,7 @@ body {
     flex-direction: column;
     gap: 5px;
     background-color: white;
-    padding: 30px 45px;
+    padding: 25px 35px;
     border-radius: 7px;
 }
 

@@ -1,5 +1,5 @@
 :root {
-  --effects-color: #2bcbba;
+  --effects-color: #25af9d;
 }
 
 body {
@@ -16,7 +16,7 @@ body {
 .background {
   height: 100vh;
   width: 100vw;
-  background-image: url('/static/metropolitana.jpg');
+  background-image: url('/static/metro_selezione.jpeg');
   background-size: cover;
   background-position: center;
   background-repeat: no-repeat;

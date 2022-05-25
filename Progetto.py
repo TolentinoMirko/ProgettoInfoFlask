@@ -216,6 +216,6 @@ def metropunto():
                             'fillColor': 'blue'})
     shapes.add_to(m)
     return render_template("mappa.html", map=m._repr_html_())
-
+ 
 if __name__ == '__main__':
-    app.run(host='0.0.0.0', port=2000, debug=True)
+    app.run(host='0.0.0.0', port=6969, debug=True)

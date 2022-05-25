@@ -100,7 +100,7 @@ def campi():
    
     folium.Marker(location=[scuola_lat, scuola_long],popup=info
                   , tooltip=tooltip).add_to(m)
-    folium.Marker(location=[campo_lat, campo_long],popup=info2, tooltip=tooltip).add_to(m)
+    folium.Marker(location=[campo_lat, campo_long],popup=info2, tooltip=tooltip,icon=folium.Icon(color="green")).add_to(m)
 
     shapes = gpd.GeoSeries(quartieri['geometry']).simplify(tolerance=0.00001)
     shapes = shapes.to_json()
@@ -130,7 +130,7 @@ def ristoranti():
     tooltip = "Cliccami!",
     folium.Marker(location=[scuola_lat, scuola_long],
                   popup=info, tooltip=tooltip).add_to(m)
-    folium.Marker(location=[ris_lat, ris_long],popup= info2 ,tooltip=tooltip).add_to(m)
+    folium.Marker(location=[ris_lat, ris_long],popup= info2 ,tooltip=tooltip,icon=folium.Icon(color="red")).add_to(m)
 
     shapes = gpd.GeoSeries(quartieri['geometry']).simplify(tolerance=0.00001)
     shapes = shapes.to_json()
@@ -169,7 +169,7 @@ def trampunto():
     tooltip = "Cliccami!",
     folium.Marker(location=[scuola_lat, scuola_long],
                   popup=info, tooltip=tooltip).add_to(m)
-    folium.Marker(location=[ris_lat, ris_long],popup= info2 ,tooltip=tooltip).add_to(m)
+    folium.Marker(location=[ris_lat, ris_long],popup= info2 ,tooltip=tooltip,icon=folium.Icon(color="blue")).add_to(m)
 
     shapes = gpd.GeoSeries(quartieri['geometry']).simplify(tolerance=0.00001)
     shapes = shapes.to_json()
@@ -208,7 +208,7 @@ def metropunto():
     tooltip = "Cliccami!",
     folium.Marker(location=[scuola_lat, scuola_long],
                   popup=info, tooltip=tooltip).add_to(m)
-    folium.Marker(location=[ris_lat, ris_long],popup = info2,tooltip=tooltip).add_to(m)
+    folium.Marker(location=[ris_lat, ris_long],popup = info2,tooltip=tooltip,icon=folium.Icon(color="blue")).add_to(m)
 
     shapes = gpd.GeoSeries(quartieri['geometry']).simplify(tolerance=0.00001)
     shapes = shapes.to_json()

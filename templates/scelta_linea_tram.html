@@ -1,6 +1,5 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
   <meta charset="UTF-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -12,6 +11,7 @@
 <body>
   <div class="background"></div>
   <form action="/trampunto" method='GET'>
+    
     <label for="fermatedropdown">Selezionare fermata</label>
     <select name="fermatedropdown">
       {% for fermata in fermate%}
@@ -19,7 +19,7 @@
       {%endfor%}
     </select>
     <a onclick="this.closest('form').submit();return false;" class='button'>CERCA</a>
+
   </form>
 </body>
-
 </html>

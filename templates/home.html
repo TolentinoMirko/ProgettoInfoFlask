@@ -1,8 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
-
 
   <title>MilanWays</title>
   <link rel="stylesheet" href="static/style.css">
@@ -10,7 +8,7 @@
 </head>
 
 <body>
-  <video src="video src..." class="bg" autoplay muted loop></video>
+  <video src="/static/home.mp4" class="bg" autoplay muted loop></video>
   <div class="content">
     <div class="nomelogo"></div>
     <p class="subtitle">Un punto a due passi dalla scuola</p>
@@ -26,53 +24,5 @@
   </div>
 
 </body>
-
-<script>
-
-  function getLocation() {
-    if (navigator.geolocation) {
-      navigator.geolocation.getCurrentPosition(showPosition, showError);
-    } else {
-      alert("Geolocation is not supported by this browser.");
-    }
-  }
-
-  function showPosition(position) {
-    console.log(position.coords.latitude, position.coords.longitude);
-    console.log(`acc ${position.coords.accuracy}m`);
-
-    options['lat'] = position.coords.latitude;
-    options['lng'] = position.coords.longitude;
-
-    getData() //Esegue la funzione per comunicare con Flask
-  }
-
-  function showError(error) {
-    getData() //Esegue la funzione per comunicare con Flask
-
-    switch (error.code) {
-      case error.PERMISSION_DENIED:
-        alert("User denied the request for Geolocation.");
-        break;
-      case error.POSITION_UNAVAILABLE:
-        alert("Location information is unavailable.");
-        break;
-      case error.TIMEOUT:
-        alert("The request to get user location timed out.");
-        break;
-      case error.UNKNOWN_ERROR:
-        alert("An unknown error occurred.");
-        break;
-    }
-  }
-  // $.ajax({
-  //   type: "POST",
-  //   url: '/mappa', //route dove deve andare
-  //   data: {}, //
-  //   success: success, //richiama la funzione se la richiesta ha successo
-  //   dataType: JSON //
-  // });
-
-</script>
 
 </html>

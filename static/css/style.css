@@ -97,3 +97,8 @@ form {
   -webkit-text-stroke-color: black;
   user-select: none; 
 }
+.infobutton{
+  cursor: pointer;
+}
+
+

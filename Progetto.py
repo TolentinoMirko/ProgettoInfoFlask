@@ -17,17 +17,17 @@ matplotlib.use('Agg')
 # pip install flask geopandas matplotlib contextily pandas folium
 
 quartieri = gpd.read_file(
-    '/workspace/ProgettoInfoFlask/static/ds964_nil_wm-20220502T120333Z-001.zip')
+    '/workspace/ProgettoInfoFlask/static/dataframes/ds964_nil_wm-20220502T120333Z-001.zip')
 scuole = gpd.read_file(
-    '/workspace/ProgettoInfoFlask/static/ds1305_elenco_scuole_statali_as2020_21_def_final_.geojson')
+    '/workspace/ProgettoInfoFlask/static/dataframes/ds1305_elenco_scuole_statali_as2020_21_def_final_.geojson')
 impianti_sportivi = gpd.read_file(
-    '/workspace/ProgettoInfoFlask/static/impianti_sportivi_11_06_2020.geojson')
+    '/workspace/ProgettoInfoFlask/static/dataframes/impianti_sportivi_11_06_2020.geojson')
 ristoranti_GPD = gpd.read_file(
-    '/workspace/ProgettoInfoFlask/static/economia_pubblici_esercizi_in_piano.geojson')
+    '/workspace/ProgettoInfoFlask/static/dataframes/economia_pubblici_esercizi_in_piano.geojson')
 fermate_tram = gpd.read_file(
-    '/workspace/ProgettoInfoFlask/static/tpl_fermate.geojson')
+    '/workspace/ProgettoInfoFlask/static/dataframes/tpl_fermate.geojson')
 fermate_metro = gpd.read_file(
-    '/workspace/ProgettoInfoFlask/static/tpl_metrofermate.geojson')
+    '/workspace/ProgettoInfoFlask/static/dataframes/tpl_metrofermate.geojson')
 
 #creazione colonne longitudine latitudine nel geodatagrame fermate_tram
 

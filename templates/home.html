@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
 
   <title>MilanWays</title>
@@ -10,9 +11,30 @@
 <body>
 
   <div class="infobutton">
-    <img src="/static/fotoevideo/info.png" alt="info" width="50" height="50">
+    <img src="/static/fotoevideo/info.png" onclick="openpopup()" alt="info" width="50" height="50" class="btn">
+    <div>
+      <div class="popup" id="popup">
+        <img src="/static/fotoevideo/redinfo.png" alt="info" width="50" height="50">
+        <h2>Come funziona MilanWays?</h2>
+        <p>Il sito ti permetterà di scegliere una scuola,poi ti mostrerà una mappa con la destinazione selezionata più vicina
+        </p>
+        <button type="button" onclick="closepopup()">CAPITO</button>
+      </div>
+    </div>
   </div>
 
+
+  <script>
+    let popup = document.getElementById("popup");
+
+    function openpopup() {
+      popup.classList.add("open-popup")
+    }
+
+    function closepopup() {
+      popup.classList.remove("open-popup")
+    }
+  </script>
 
   <video src="/static/fotoevideo/home.mp4" class="bg" autoplay muted loop></video>
   <div class="content">
@@ -29,7 +51,7 @@
     </form>
   </div>
 
-  
+
 </body>
 
 </html>

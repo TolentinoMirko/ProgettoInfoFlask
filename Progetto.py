@@ -16,6 +16,7 @@ matplotlib.use('Agg')
 
 # pip install flask geopandas matplotlib contextily pandas folium
 
+#caricamento geodataframe
 quartieri = gpd.read_file(
     '/workspace/ProgettoInfoFlask/static/dataframes/ds964_nil_wm-20220502T120333Z-001.zip')
 scuole = gpd.read_file(
@@ -39,6 +40,7 @@ fermate_tram['lat'] = fermate_tram['geometry'].y
 fermate_metro['lon'] = fermate_metro['geometry'].x
 fermate_metro['lat'] = fermate_metro['geometry'].y
 
+#menu a tendina per la scelta delle scuole
 @app.route("/", methods=["GET"])
 def home():
     scuolelista = scuole.DENOMINAZIONESCUOLA.drop_duplicates()
@@ -47,6 +49,7 @@ def home():
 
     return render_template("home.html", istituti=scuolelista)
 
+#parte in cui si seleziona la destinazione
 @app.route("/selezione", methods=["GET"])
 def selezione():
     global scuolautente, info, scuola_lat, scuola_long 
@@ -65,7 +68,7 @@ def selezione():
     scuola_nome = scuolautente['DENOMINAZIONESCUOLA']
     scuola_via = scuolautente['INDIRIZZOSCUOLA']
     info = [scuola_nome,scuola_via]
-
+    #marker con il punto della scuola scelta
     folium.Marker(location=[scuola_lat, scuola_long],
                   popup=info, tooltip=tooltip).add_to(m)
 
@@ -80,12 +83,12 @@ def selezione():
 # campi sportivi
 @app.route("/campisportivi", methods=["GET"])
 def campi():
-
+    #parte in cui si rileva il campo sportivo più vicino rispetto alla scuola selezionata
     puntoscuola = scuolautente['geometry'].to_crs(32632).values[0]
     dist_campi = impianti_sportivi.to_crs(32632).distance(puntoscuola)
     min_dist = impianti_sportivi[impianti_sportivi.to_crs(
         32632).distance(puntoscuola) <= dist_campi.min()].iloc[0]
-
+    #informazioni del campo che verranno inserite nel popup della mappa di folium
     campo_lat = min_dist['Latitudine']
     campo_long = min_dist['Longitudine']
     campo_via = min_dist['VIA']
@@ -97,9 +100,10 @@ def campi():
                    zoom_start=12, tiles='CartoDB positron')
 
     tooltip = "Cliccami!",
-   
+    #creazione del marker del punto della scuola
     folium.Marker(location=[scuola_lat, scuola_long],popup=info
                   , tooltip=tooltip).add_to(m)
+    #punto del campo 
     folium.Marker(location=[campo_lat, campo_long],popup=info2, tooltip=tooltip,icon=folium.Icon(color="green")).add_to(m)
 
     shapes = gpd.GeoSeries(quartieri['geometry']).simplify(tolerance=0.00001)
@@ -113,23 +117,25 @@ def campi():
 # ristoranti
 @app.route("/ristoranti", methods=["GET"])
 def ristoranti():
+    #parte in cui si rileva il ristorante/fastfood più vicino rispetto alla scuola selezionata
     puntoscuola = scuolautente['geometry'].to_crs(32632).values[0]
     dist_ristorante = ristoranti_GPD.to_crs(32632).distance(puntoscuola)
     min_ristorante = ristoranti_GPD[ristoranti_GPD.to_crs(
         32632).distance(puntoscuola) <= dist_ristorante.min()].iloc[0]
-
+    #informazioni risorante
     ris_lat = min_ristorante['LAT_WGS84']
     ris_long = min_ristorante['LONG_WGS84']
     nome_ristorante = min_ristorante['insegna']
-    print(nome_ristorante)
     rist_via = min_ristorante['Ubicazione']
     info2 = [nome_ristorante,rist_via]
+
     m = folium.Map(location=[45.4654219, 9.1859243],
                    zoom_start=12, tiles='CartoDB positron')
 
     tooltip = "Cliccami!",
     folium.Marker(location=[scuola_lat, scuola_long],
                   popup=info, tooltip=tooltip).add_to(m)
+    #punto del ristorante
     folium.Marker(location=[ris_lat, ris_long],popup= info2 ,tooltip=tooltip,icon=folium.Icon(color="red")).add_to(m)
 
     shapes = gpd.GeoSeries(quartieri['geometry']).simplify(tolerance=0.00001)
@@ -141,8 +147,10 @@ def ristoranti():
 #____________________________________________________________________________________________________________________________
 
 # tram
+
 @app.route("/tram", methods=["GET"])
 def tram():
+    #menu a tendina per la scelta dei tram
     lista_linee_tram = fermate_tram.linee.drop_duplicates()
     lista_linee_tram = lista_linee_tram.to_list()
     lista_linee_tram.sort()
@@ -152,11 +160,13 @@ def tram():
 def trampunto():
     linea_utente = request.args['fermatedropdown']
     linea_scelta = fermate_tram.loc[fermate_tram['linee'].str.contains(linea_utente,case=False)]
-
+    
+    #parte in cui si rileva la fermata del tram/mezzi di superfice più vicina rispetto alla scuola selezionata
     puntoscuola = scuolautente['geometry'].to_crs(32632).values[0]
     dist_fermate_tram = linea_scelta.to_crs(32632).distance(puntoscuola)
     min_fermata_tram = linea_scelta[linea_scelta.to_crs(32632).distance(puntoscuola) <= dist_fermate_tram.min()].iloc[0]
     
+    #informazioni tram 
     ris_lat = min_fermata_tram['lat']
     ris_long = min_fermata_tram['lon']
     num_linea = min_fermata_tram['linee']
@@ -169,6 +179,7 @@ def trampunto():
     tooltip = "Cliccami!",
     folium.Marker(location=[scuola_lat, scuola_long],
                   popup=info, tooltip=tooltip).add_to(m)
+    #punto tram
     folium.Marker(location=[ris_lat, ris_long],popup= info2 ,tooltip=tooltip,icon=folium.Icon(color="blue")).add_to(m)
 
     shapes = gpd.GeoSeries(quartieri['geometry']).simplify(tolerance=0.00001)
@@ -179,9 +190,11 @@ def trampunto():
     return render_template("mappa.html", map=m._repr_html_())
 #____________________________________________________________________________________________________________________________
 
-# metropolitane
+#metropolitane
+
 @app.route("/metropolitane", methods=["GET"])
 def metropolitane():
+    #menu a tendina per la scelta della metro
     lista_linee_metro = fermate_metro.linee.drop_duplicates()
     lista_linee_metro = lista_linee_metro.to_list()
     lista_linee_metro.sort()
@@ -193,10 +206,11 @@ def metropunto():
     linea_utente = request.args['fermatedropdown']
     linea_scelta = fermate_metro.loc[fermate_metro['linee'].str.contains(linea_utente,case=False)]
 
+    #parte in cui si rileva la fermata della metro più vicina rispetto alla scuola selezionata
     puntoscuola = scuolautente['geometry'].to_crs(32632).values[0]
     dist_fermate_metro = linea_scelta.to_crs(32632).distance(puntoscuola)
     min_fermata_metro = linea_scelta[linea_scelta.to_crs(32632).distance(puntoscuola) <= dist_fermate_metro.min()].iloc[0]
-
+    #informazioni metro
     ris_lat = min_fermata_metro['lat']
     ris_long = min_fermata_metro['lon']
     num_linea = min_fermata_metro['linee']
@@ -208,6 +222,7 @@ def metropunto():
     tooltip = "Cliccami!",
     folium.Marker(location=[scuola_lat, scuola_long],
                   popup=info, tooltip=tooltip).add_to(m)
+    #punto metro
     folium.Marker(location=[ris_lat, ris_long],popup = info2,tooltip=tooltip,icon=folium.Icon(color="orange")).add_to(m)
 
     shapes = gpd.GeoSeries(quartieri['geometry']).simplify(tolerance=0.00001)
